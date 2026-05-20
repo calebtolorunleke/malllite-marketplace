@@ -9,6 +9,7 @@ import CategorySidebar from "./components/CategorySidebar";
 import Footer from "./components/Footer";
 import Pagination from "./components/Pagination";
 import ProductDetail from "./pages/ProductDetail";
+import Checkout from "./pages/Checkout";
 
 import { fetchProducts } from "./api/products";
 
@@ -27,7 +28,7 @@ function App() {
   // ================= RESPONSIVE PAGINATION (3 ROWS PER PAGE) =================
   const getItemsPerPage = () => {
     if (window.innerWidth >= 1024) return 12; // 4 cols × 3 rows
-    if (window.innerWidth >= 768) return 9;   // 3 cols × 3 rows
+    if (window.innerWidth >= 768) return 9; // 3 cols × 3 rows
     return 6; // 2 cols × 3 rows
   };
 
@@ -51,7 +52,7 @@ function App() {
         return prev.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
-            : item
+            : item,
         );
       }
 
@@ -61,7 +62,7 @@ function App() {
 
   const cartCount = useMemo(
     () => cart.reduce((sum, item) => sum + item.quantity, 0),
-    [cart]
+    [cart],
   );
 
   // ================= FETCH PRODUCTS =================
@@ -98,13 +99,13 @@ function App() {
   // ================= PAGINATION =================
   const totalPages = Math.max(
     1,
-    Math.ceil(filteredProducts.length / itemsPerPage)
+    Math.ceil(filteredProducts.length / itemsPerPage),
   );
 
   const paginatedProducts = useMemo(() => {
     return filteredProducts.slice(
       (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
+      currentPage * itemsPerPage,
     );
   }, [filteredProducts, currentPage, itemsPerPage]);
 
@@ -166,7 +167,6 @@ function App() {
   // ================= APP LAYOUT =================
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-
       {/* NAVBAR */}
       <Navbar
         search={search}
@@ -181,12 +181,11 @@ function App() {
         <Route path="/products" element={<ProductsPage />} />
         <Route
           path="/product/:id"
-          element={
-            <ProductDetail
-              products={products}
-              addToCart={addToCart}
-            />
-          }
+          element={<ProductDetail products={products} addToCart={addToCart} />}
+        />
+        <Route
+          path="/checkout"
+          element={<Checkout cart={cart} setCart={setCart} />}
         />
       </Routes>
 

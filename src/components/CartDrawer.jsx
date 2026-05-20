@@ -1,5 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 function CartDrawer({ isOpen, onClose, cart, setCart }) {
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const navigate = useNavigate();
+
+  const total = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   const removeItem = (id) => {
     setCart(cart.filter((item) => item.id !== id));
@@ -8,8 +15,10 @@ function CartDrawer({ isOpen, onClose, cart, setCart }) {
   const increaseQty = (id) => {
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
-      ),
+        item.id === id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
     );
   };
 
@@ -17,9 +26,11 @@ function CartDrawer({ isOpen, onClose, cart, setCart }) {
     setCart((prev) =>
       prev
         .map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item,
+          item.id === id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
         )
-        .filter((item) => item.quantity > 0),
+        .filter((item) => item.quantity > 0)
     );
   };
 
@@ -27,7 +38,10 @@ function CartDrawer({ isOpen, onClose, cart, setCart }) {
     <>
       {/* BACKDROP */}
       {isOpen && (
-        <div onClick={onClose} className="fixed inset-0 bg-black/50 z-40" />
+        <div
+          onClick={onClose}
+          className="fixed inset-0 bg-black/50 z-40"
+        />
       )}
 
       {/* DRAWER */}
@@ -55,7 +69,9 @@ function CartDrawer({ isOpen, onClose, cart, setCart }) {
         {/* CONTENT */}
         <div className="flex-1 overflow-y-auto px-4 sm:px-5 py-4">
           {cart.length === 0 ? (
-            <p className="text-gray-500 text-sm">Your cart is empty</p>
+            <p className="text-gray-500 text-sm">
+              Your cart is empty
+            </p>
           ) : (
             cart.map((item) => (
               <div
@@ -71,10 +87,12 @@ function CartDrawer({ isOpen, onClose, cart, setCart }) {
                 {/* INFO */}
                 <div className="flex-1">
                   <p className="font-semibold text-sm sm:text-base line-clamp-1">
-                    {item.name}
+                    {item.name || item.title}
                   </p>
 
-                  <p className="text-sm text-gray-600">${item.price}</p>
+                  <p className="text-sm text-gray-600">
+                    ${item.price}
+                  </p>
 
                   {/* QTY CONTROLS */}
                   <div className="flex items-center gap-3 mt-2">
@@ -85,7 +103,9 @@ function CartDrawer({ isOpen, onClose, cart, setCart }) {
                       -
                     </button>
 
-                    <span className="text-sm font-medium">{item.quantity}</span>
+                    <span className="text-sm font-medium">
+                      {item.quantity}
+                    </span>
 
                     <button
                       onClick={() => increaseQty(item.id)}
@@ -115,7 +135,10 @@ function CartDrawer({ isOpen, onClose, cart, setCart }) {
             <span>${total.toFixed(2)}</span>
           </div>
 
-          <button className="w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 active:scale-[0.98] transition">
+          <button
+            onClick={() => navigate("/checkout")}
+            className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition"
+          >
             Checkout
           </button>
         </div>

@@ -5,12 +5,17 @@ function Navbar({ search, setSearch, cartCount, onCartClick }) {
 
   const goHome = () => {
     navigate("/");
+
+    // scroll to top after route change
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
     <header className="sticky top-0 z-50 bg-[#0b1220] border-b border-white/10 text-white backdrop-blur-md shadow-lg">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4 gap-3">
-
         {/* LOGO (NOW CLICKABLE → HOME) */}
         <div
           onClick={goHome}
@@ -22,7 +27,6 @@ function Navbar({ search, setSearch, cartCount, onCartClick }) {
         {/* DESKTOP SEARCH */}
         <div className="hidden md:flex flex-1 mx-6">
           <div className="flex w-full max-w-2xl bg-white/10 border border-white/10 rounded-full overflow-hidden">
-
             <input
               type="text"
               value={search}
@@ -34,13 +38,11 @@ function Navbar({ search, setSearch, cartCount, onCartClick }) {
             <button className="bg-yellow-400 text-black px-6 font-semibold hover:bg-yellow-300 transition">
               Search
             </button>
-
           </div>
         </div>
 
         {/* RIGHT SECTION */}
         <div className="flex items-center gap-2 md:gap-4">
-
           {/* MOBILE SEARCH BUTTON */}
           <button className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition active:scale-95">
             🔍
@@ -58,9 +60,7 @@ function Navbar({ search, setSearch, cartCount, onCartClick }) {
               {cartCount}
             </span>
           </button>
-
         </div>
-
       </div>
     </header>
   );
