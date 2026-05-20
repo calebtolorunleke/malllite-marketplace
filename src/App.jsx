@@ -23,7 +23,24 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+
+  // ================= RESPONSIVE PAGINATION (3 ROWS PER PAGE) =================
+  const getItemsPerPage = () => {
+    if (window.innerWidth >= 1024) return 12; // 4 cols × 3 rows
+    if (window.innerWidth >= 768) return 9;   // 3 cols × 3 rows
+    return 6; // 2 cols × 3 rows
+  };
+
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
+
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsPerPage(getItemsPerPage());
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // ================= CART =================
   const addToCart = (product) => {
@@ -89,8 +106,9 @@ function App() {
       (currentPage - 1) * itemsPerPage,
       currentPage * itemsPerPage
     );
-  }, [filteredProducts, currentPage]);
+  }, [filteredProducts, currentPage, itemsPerPage]);
 
+  // reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [search, category]);
@@ -101,10 +119,7 @@ function App() {
       <Hero addToCart={addToCart} />
 
       <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row gap-6 px-4 py-10">
-        <CategorySidebar
-          category={category}
-          setCategory={setCategory}
-        />
+        <CategorySidebar category={category} setCategory={setCategory} />
 
         <div className="flex-1">
           <ProductGrid
@@ -128,10 +143,7 @@ function App() {
   // ================= PRODUCTS PAGE =================
   const ProductsPage = () => (
     <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row gap-6 px-4 py-10">
-      <CategorySidebar
-        category={category}
-        setCategory={setCategory}
-      />
+      <CategorySidebar category={category} setCategory={setCategory} />
 
       <div className="flex-1">
         <ProductGrid
@@ -155,7 +167,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
 
-      {/* NAVBAR (ALWAYS VISIBLE) */}
+      {/* NAVBAR */}
       <Navbar
         search={search}
         setSearch={setSearch}
@@ -186,7 +198,7 @@ function App() {
         setCart={setCart}
       />
 
-      {/* FOOTER (ALWAYS VISIBLE) */}
+      {/* FOOTER */}
       <Footer />
     </div>
   );
