@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -7,6 +8,7 @@ import CartDrawer from "./components/CartDrawer";
 import CategorySidebar from "./components/CategorySidebar";
 import Footer from "./components/Footer";
 import Pagination from "./components/Pagination";
+import ProductDetail from "./pages/ProductDetail";
 
 import { fetchProducts } from "./api/products";
 
@@ -19,12 +21,11 @@ function App() {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
-  // ================= CART LOGIC =================
+  // ================= CART =================
   const addToCart = (product) => {
     setCart((prev) => {
       const exists = prev.find((item) => item.id === product.id);
@@ -41,22 +42,18 @@ function App() {
     });
   };
 
-  const cartCount = useMemo(() => {
-    return cart.reduce((sum, item) => sum + item.quantity, 0);
-  }, [cart]);
+  const cartCount = useMemo(
+    () => cart.reduce((sum, item) => sum + item.quantity, 0),
+    [cart]
+  );
 
   // ================= FETCH PRODUCTS =================
   useEffect(() => {
     const loadProducts = async () => {
       try {
         setLoading(true);
-        setError(null);
-
         const data = await fetchProducts();
         setProducts(data);
-      } catch (err) {
-        console.error("Failed to fetch products:", err);
-        setError("Unable to load products. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -65,7 +62,7 @@ function App() {
     loadProducts();
   }, []);
 
-  // ================= FILTER PRODUCTS =================
+  // ================= FILTER =================
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       if (!product) return false;
@@ -94,16 +91,71 @@ function App() {
     );
   }, [filteredProducts, currentPage]);
 
-  // ================= RESET PAGE ON FILTER CHANGE =================
   useEffect(() => {
     setCurrentPage(1);
   }, [search, category]);
 
-  // ================= UI =================
+  // ================= HOME =================
+  const Home = () => (
+    <>
+      <Hero addToCart={addToCart} />
+
+      <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row gap-6 px-4 py-10">
+        <CategorySidebar
+          category={category}
+          setCategory={setCategory}
+        />
+
+        <div className="flex-1">
+          <ProductGrid
+            products={paginatedProducts}
+            search={search}
+            addToCart={addToCart}
+            category={category}
+            loading={loading}
+          />
+
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+          />
+        </div>
+      </div>
+    </>
+  );
+
+  // ================= PRODUCTS PAGE =================
+  const ProductsPage = () => (
+    <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row gap-6 px-4 py-10">
+      <CategorySidebar
+        category={category}
+        setCategory={setCategory}
+      />
+
+      <div className="flex-1">
+        <ProductGrid
+          products={paginatedProducts}
+          search={search}
+          addToCart={addToCart}
+          category={category}
+          loading={loading}
+        />
+
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
+      </div>
+    </div>
+  );
+
+  // ================= APP LAYOUT =================
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
 
-      {/* NAVBAR */}
+      {/* NAVBAR (ALWAYS VISIBLE) */}
       <Navbar
         search={search}
         setSearch={setSearch}
@@ -111,47 +163,20 @@ function App() {
         onCartClick={() => setIsCartOpen(true)}
       />
 
-      {/* HERO */}
-      <Hero />
-
-      {/* MAIN LAYOUT */}
-      <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row gap-6 px-4 py-10 flex-1">
-
-        {/* SIDEBAR */}
-        <div className="w-full md:w-64">
-          <CategorySidebar
-            category={category}
-            setCategory={setCategory}
-          />
-        </div>
-
-        {/* PRODUCTS */}
-        <div className="flex-1">
-
-          {error ? (
-            <div className="text-red-500 text-center py-10">
-              {error}
-            </div>
-          ) : (
-            <>
-              <ProductGrid
-                products={paginatedProducts}
-                search={search}
-                addToCart={addToCart}
-                category={category}
-                loading={loading}
-              />
-
-              <Pagination
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                totalPages={totalPages}
-              />
-            </>
-          )}
-
-        </div>
-      </div>
+      {/* ROUTES */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route
+          path="/product/:id"
+          element={
+            <ProductDetail
+              products={products}
+              addToCart={addToCart}
+            />
+          }
+        />
+      </Routes>
 
       {/* CART DRAWER */}
       <CartDrawer
@@ -161,7 +186,7 @@ function App() {
         setCart={setCart}
       />
 
-      {/* FOOTER */}
+      {/* FOOTER (ALWAYS VISIBLE) */}
       <Footer />
     </div>
   );

@@ -1,11 +1,21 @@
+import { useNavigate } from "react-router-dom";
+
 function Navbar({ search, setSearch, cartCount, onCartClick }) {
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate("/");
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-[#0b1220] border-b border-white/10 text-white backdrop-blur-md shadow-lg">
-
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4 gap-3">
 
-        {/* LOGO */}
-        <div className="text-xl md:text-2xl font-black tracking-wide text-yellow-400 cursor-pointer">
+        {/* LOGO (NOW CLICKABLE → HOME) */}
+        <div
+          onClick={goHome}
+          className="text-xl md:text-2xl font-black tracking-wide text-yellow-400 cursor-pointer active:scale-95 transition"
+        >
           MallLite
         </div>
 
@@ -44,7 +54,6 @@ function Navbar({ search, setSearch, cartCount, onCartClick }) {
             <span className="text-sm md:text-base">🛒</span>
             <span className="hidden sm:inline text-sm">Cart</span>
 
-            {/* BADGE */}
             <span className="absolute -top-2 -right-2 bg-yellow-400 text-black text-xs font-bold px-2 py-0.5 rounded-full">
               {cartCount}
             </span>
