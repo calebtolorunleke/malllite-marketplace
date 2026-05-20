@@ -9,9 +9,6 @@ A fully responsive, modern e-commerce frontend built with React and Tailwind CSS
 
 ![Home Page](<img width="2156" height="1744" alt="Image 2026-05-19 at 5 50 PM" src="https://github.com/user-attachments/assets/bcc90733-3bd7-489f-a5c2-0d86e2b9d276" />
 
-![Products Page](<img width="2132" height="1882" alt="Image 2026-05-19 at 8 39 PM" src="https://github.com/user-attachments/assets/9d7b74c9-9ca6-4595-ad0d-63ebe41307d4" />
-
-![Cart Drawer]( <img width="2144" height="1892" alt="Image 2026-05-19 at 8 40 PM" src="https://github.com/user-attachments/assets/206826fe-4f02-4cb2-ade8-4ccf6d7f756e" />
 
 
 ✨ Features
@@ -102,6 +99,3 @@ Caleb Adebayo
 GitHub: https://github.com/calebtolorunleke
 Portfolio: https://calebadebayodev.vercel.app/
 LinkedIn: https://linkedin.com/in/calebtol
-📄 License
-
-This project is for educational and portfolio purposes.<img width="2156" height="1744" alt="Image 2026-05-19 at 5 50 PM" src="https://github.com/user-attachments/assets/174570d1-31c5-429a-b03d-5809eb7ba8c0" />
