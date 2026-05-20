@@ -5,3 +5,20 @@
     transform: translateX(100%);
   }
 }
+
+@keyframes spin360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(25deg);
+  }
+}
+
+.spin-slow {
+  animation: spin360 8s linear infinite;
+}
+
+.spin-slow:hover {
+  animation-play-state: paused;
+}
