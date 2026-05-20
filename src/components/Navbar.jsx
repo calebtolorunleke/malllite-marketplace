@@ -1,18 +1,18 @@
 function Navbar({ search, setSearch, cartCount, onCartClick }) {
   return (
     <header className="sticky top-0 z-50 bg-[#0b1220] border-b border-white/10 text-white backdrop-blur-md shadow-lg">
-      
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
+
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4 gap-3">
 
         {/* LOGO */}
-        <div className="text-2xl font-black tracking-wide text-yellow-400 cursor-pointer">
+        <div className="text-xl md:text-2xl font-black tracking-wide text-yellow-400 cursor-pointer">
           MallLite
         </div>
 
-        {/* SEARCH BAR */}
+        {/* DESKTOP SEARCH */}
         <div className="hidden md:flex flex-1 mx-6">
           <div className="flex w-full max-w-2xl bg-white/10 border border-white/10 rounded-full overflow-hidden">
-            
+
             <input
               type="text"
               value={search}
@@ -29,19 +29,20 @@ function Navbar({ search, setSearch, cartCount, onCartClick }) {
         </div>
 
         {/* RIGHT SECTION */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
 
-          {/* MOBILE SEARCH ICON (optional upgrade) */}
-          <button className="md:hidden text-xl">
+          {/* MOBILE SEARCH BUTTON */}
+          <button className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition active:scale-95">
             🔍
           </button>
 
-          {/* CART BUTTON */}
+          {/* CART */}
           <button
             onClick={onCartClick}
-            className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+            className="relative flex items-center gap-2 px-3 md:px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition active:scale-95"
           >
-            🛒 Cart
+            <span className="text-sm md:text-base">🛒</span>
+            <span className="hidden sm:inline text-sm">Cart</span>
 
             {/* BADGE */}
             <span className="absolute -top-2 -right-2 bg-yellow-400 text-black text-xs font-bold px-2 py-0.5 rounded-full">

@@ -2,77 +2,98 @@ function Hero() {
   return (
     <section className="relative bg-gradient-to-br from-[#0f172a] via-[#111827] to-black text-white overflow-hidden">
       {/* BACKGROUND GLOW */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-yellow-500/20 blur-3xl rounded-full"></div>
+      <div className="absolute -top-20 -left-20 w-72 h-72 md:w-96 md:h-96 bg-yellow-500/20 blur-3xl rounded-full" />
+      <div className="absolute bottom-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-blue-500/10 blur-3xl rounded-full" />
 
-      <div className="max-w-7xl mx-auto px-6 py-24 grid lg:grid-cols-2 gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-6 py-20 md:py-24 grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
         {/* LEFT CONTENT */}
-        <div className="z-10">
-          <p className="uppercase tracking-[0.3em] text-yellow-400 text-sm font-semibold mb-5">
+        <div className="z-10 text-center lg:text-left">
+          <p className="uppercase tracking-[0.25em] text-yellow-400 text-xs md:text-sm font-semibold mb-5">
             MallLite Marketplace
           </p>
 
-          <h1 className="text-5xl md:text-7xl font-black leading-tight">
+          <h1 className="text-4xl md:text-6xl font-black leading-tight">
             Shop Smarter.
             <span className="block text-yellow-400">Live Better.</span>
           </h1>
 
-          <p className="mt-8 text-gray-300 text-lg leading-8 max-w-xl">
+          <p className="mt-6 md:mt-8 text-gray-300 text-base md:text-lg leading-7 md:leading-8 max-w-xl mx-auto lg:mx-0">
             Discover trending gadgets, fashion, electronics, and premium
-            essentials — all in one modern shopping experience inspired by the
-            world’s biggest marketplaces.
+            essentials — all in one modern shopping experience inspired by
+            world-class marketplaces.
           </p>
 
           {/* CTA BUTTONS */}
-          <div className="mt-10 flex flex-wrap gap-5">
-            <button className="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold hover:scale-105 hover:bg-yellow-300 transition duration-300 shadow-xl">
+          <div className="mt-8 md:mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <button className="bg-yellow-400 text-black px-6 py-4 rounded-2xl font-bold hover:scale-105 hover:bg-yellow-300 transition shadow-lg">
               Start Shopping
             </button>
 
-            <button className="border border-gray-600 px-8 py-4 rounded-2xl hover:bg-white hover:text-black transition duration-300">
+            <button className="border border-white/20 px-6 py-4 rounded-2xl hover:bg-white hover:text-black transition">
               Explore Deals
             </button>
           </div>
 
           {/* STATS */}
-          <div className="mt-14 flex gap-10 flex-wrap">
+          <div className="mt-10 md:mt-14 flex justify-center lg:justify-start gap-8 md:gap-10 flex-wrap text-center lg:text-left">
             <div>
-              <h2 className="text-3xl font-bold">10K+</h2>
-              <p className="text-gray-400 text-sm">Active Users</p>
+              <h2 className="text-2xl md:text-3xl font-bold">10K+</h2>
+              <p className="text-gray-400 text-xs md:text-sm">Active Users</p>
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold">500+</h2>
-              <p className="text-gray-400 text-sm">Premium Products</p>
+              <h2 className="text-2xl md:text-3xl font-bold">500+</h2>
+              <p className="text-gray-400 text-xs md:text-sm">Products</p>
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold">24/7</h2>
-              <p className="text-gray-400 text-sm">Customer Support</p>
+              <h2 className="text-2xl md:text-3xl font-bold">24/7</h2>
+              <p className="text-gray-400 text-xs md:text-sm">Support</p>
             </div>
           </div>
         </div>
 
         {/* RIGHT CONTENT */}
-        <div className="relative flex justify-center items-center">
-          {/* MAIN CARD */}
-          <div className="relative bg-white/10 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 shadow-2xl w-full max-w-md">
+        <div className="flex justify-center">
+          <div
+            className="
+            relative w-full max-w-sm md:max-w-md
+            bg-white/10 backdrop-blur-xl
+            border border-white/10
+            rounded-[2rem]
+            p-4 md:p-6
+            shadow-2xl
+            hover:scale-[1.02]
+            transition duration-300
+          "
+          >
             <img
               src="https://images.unsplash.com/photo-1542291026-7eec264c27ff"
               alt="Product"
-              className="rounded-2xl object-cover h-[400px] w-full"
+              className="rounded-2xl object-cover h-64 sm:h-72 md:h-[400px] w-full"
             />
 
-            <div className="mt-6">
-              <p className="text-sm text-yellow-400 uppercase">
+            <div className="mt-5 md:mt-6">
+              <p className="text-xs md:text-sm text-yellow-400 uppercase">
                 Featured Product
               </p>
 
-              <h3 className="text-2xl font-bold mt-2">Nike Air Max</h3>
+              <h3 className="text-xl md:text-2xl font-bold mt-2">
+                Nike Air Max
+              </h3>
 
               <div className="flex items-center justify-between mt-4">
-                <p className="text-3xl font-black">$129</p>
+                <p className="text-2xl md:text-3xl font-black">$129</p>
 
-                <button className="bg-yellow-400 text-black px-5 py-3 rounded-xl font-semibold hover:bg-yellow-300 transition">
+                <button
+                  className="
+                  bg-yellow-400 text-black
+                  px-4 py-2 md:px-5 md:py-3
+                  rounded-xl font-semibold
+                  hover:bg-yellow-300
+                  transition
+                "
+                >
                   Add to Cart
                 </button>
               </div>

@@ -1,19 +1,30 @@
 import ProductSkeleton from "./ProductSkeleton";
 
-function ProductGrid({ products = [], search, addToCart, category, loading }) {
-  // 🧠 SAFE FILTERING (prevents crash)
+function ProductGrid({
+  products = [],
+  search = "",
+  addToCart,
+  category = "all",
+  loading,
+}) {
+  // ================= SAFE FILTERING =================
   const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.title
+    if (!product) return false;
+
+    const title = product?.title ?? "";
+    const productCategory = product?.category ?? "";
+
+    const matchesSearch = title
       .toLowerCase()
       .includes(search.toLowerCase());
 
     const matchesCategory =
-      category === "all" || product.category === category;
+      category === "all" || productCategory === category;
 
     return matchesSearch && matchesCategory;
   });
 
-  // ⏳ LOADING STATE (SKELETON UI)
+  // ================= LOADING STATE =================
   if (loading) {
     return (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -24,47 +35,62 @@ function ProductGrid({ products = [], search, addToCart, category, loading }) {
     );
   }
 
-  // 📭 EMPTY STATE (IMPORTANT UX)
-  if (filteredProducts.length === 0) {
+  // ================= EMPTY STATE =================
+  if (!filteredProducts.length) {
     return (
-      <div className="col-span-full text-center text-gray-500 mt-10">
+      <div className="flex items-center justify-center py-20 text-gray-500 text-sm">
         No products found 😕
       </div>
     );
   }
 
+  // ================= PRODUCT GRID =================
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {filteredProducts.map((product) => {
+        const id = product?.id;
+        const title = product?.title ?? "Untitled Product";
+        const image = product?.image ?? "";
+        const price = product?.price ?? 0;
 
-      {filteredProducts.map((product) => (
-        <div
-          key={product.id}
-          className="bg-white rounded-xl shadow-sm hover:shadow-lg transition p-4 group"
-        >
-
-          <img
-            src={product.image}
-            alt={product.title}
-            className="h-40 mx-auto object-contain group-hover:scale-105 transition duration-300"
-          />
-
-          <h2 className="mt-3 font-semibold text-sm line-clamp-2">
-            {product.title}
-          </h2>
-
-          <p className="font-bold mt-2 text-gray-900">
-            ${product.price}
-          </p>
-
-          <button
-            onClick={() => addToCart(product)}
-            className="mt-3 w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition"
+        return (
+          <div
+            key={id}
+            className="bg-white rounded-xl shadow-sm hover:shadow-lg transition overflow-hidden group"
           >
-            Add to Cart
-          </button>
+            {/* IMAGE */}
+            <div className="h-40 bg-gray-100 flex items-center justify-center overflow-hidden">
+              <img
+                src={image}
+                alt={title}
+                className="h-full object-contain group-hover:scale-105 transition duration-300"
+              />
+            </div>
 
-        </div>
-      ))}
+            {/* CONTENT */}
+            <div className="p-4">
+              <h2 className="font-semibold text-sm line-clamp-2 text-gray-800">
+                {title}
+              </h2>
+
+              <p className="text-gray-500 text-xs mt-1 capitalize">
+                {product?.category}
+              </p>
+
+              <p className="font-bold text-lg mt-2 text-gray-900">
+                ${price}
+              </p>
+
+              <button
+                onClick={() => addToCart(product)}
+                className="mt-3 w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
